@@ -5,23 +5,20 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import com.just3days.db.DeterminationDB
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_write.*
 
-class MainActivity : AppCompatActivity() {
+class WriteTextActivity : AppCompatActivity() {
 
-    private var determinationDB : DeterminationDB? = null
+    private var determinationDB: DeterminationDB? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_write)
 
         determinationDB = DeterminationDB.getInstance(this)
 
-        //val numOfData = determinationDB?.determinationInfoDao()?.isEmpty()
-
-
         var prevText = ""
-        editText.addTextChangedListener(object : TextWatcher {
+        writeText.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
 
@@ -30,9 +27,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(editable: Editable?) {
-                if (editText.lineCount >= 10) {
-                    editText.setText(prevText)
-                    editText.setSelection(editText.length())
+                if (writeText.lineCount >= 10) {
+                    writeText.setText(prevText)
+                    writeText.setSelection(writeText.length())
                 }
             }
         })
