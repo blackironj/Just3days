@@ -17,6 +17,7 @@
             android:maxLines="20"
             android:gravity="top"
             android:hint="Write your determinations"
+            android:textCursorDrawable="@drawable/color_cursor"
             android:id="@+id/writeText"
             android:fontFamily="@font/sinbi"
             android:layout_marginTop="48dp"
@@ -29,11 +30,11 @@
 
     <Button
             android:text="心"
-            android:textSize="30dp"
+            android:textSize="30sp"
             android:background="?android:attr/selectableItemBackground"
             android:layout_width="125dp"
             android:layout_height="58dp"
-            android:id="@+id/determination" app:layout_constraintStart_toStartOf="parent"
+            android:id="@+id/btnSaveData" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -25,7 +25,7 @@
 
     <Button
             android:text="心"
-            android:textSize="30dp"
+            android:textSize="30sp"
             android:background="?android:attr/selectableItemBackground"
             android:layout_width="125dp"
             android:layout_height="58dp"

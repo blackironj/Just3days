@@ -5,8 +5,10 @@ import android.arch.persistence.room.PrimaryKey
 
 @Entity
 data class DeterminationInfo(
-    @PrimaryKey(autoGenerate = true) val id: Long,
-    var start_time: Long,
-    var last_check_time: Long,
-    var content: String
-)
+    var start_time: Int,
+    var last_check_time: Int,
+    var content: String?
+) {
+    @PrimaryKey(autoGenerate = true)
+    var id: Int? = null
+}

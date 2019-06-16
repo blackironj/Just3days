@@ -15,19 +15,26 @@ class SplashActivity : AppCompatActivity() {
 
     internal val runnable: Runnable = Runnable {
         determinationDB = DeterminationDB.getInstance(this)
-        val item = determinationDB?.determinationInfoDao()?.isEmpty()
 
-        if (!isFinishing) {
-            val intent: Intent
+        val initTask = Runnable {
+            val item = determinationDB?.determinationInfoDao()?.isEmpty()
 
-            if (item == 0)
-                intent = Intent(applicationContext, WriteTextActivity::class.java)
-            else
-                intent = Intent(applicationContext, ShowTextActivity::class.java)
+            if (!isFinishing) {
+                val intent: Intent
 
-            startActivity(intent)
-            finish()
+                if (item == 0)
+                    intent = Intent(applicationContext, WriteTextActivity::class.java)
+                else
+                    intent = Intent(applicationContext, ShowTextActivity::class.java)
+
+                startActivity(intent)
+                finish()
+            }
         }
+
+        val initThread = Thread(initTask)
+
+        initThread.start()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
