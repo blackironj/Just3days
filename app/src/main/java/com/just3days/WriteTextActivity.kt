@@ -4,7 +4,6 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.Toast
 import com.just3days.db.DeterminationDB
 import com.just3days.db.DeterminationInfo
 import kotlinx.android.synthetic.main.activity_write.*
@@ -47,13 +46,11 @@ class WriteTextActivity : AppCompatActivity() {
 
             val runSaveDataTask = Runnable {
                 determinationDB?.determinationInfoDao()?.insert(newInfo)
-
-                finish()
-
-                System.exit(0)
             }
             val writeThread = Thread(runSaveDataTask)
             writeThread.start()
+
+            finish()
         }
 
     }
