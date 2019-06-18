@@ -16,8 +16,8 @@ interface DeterminationInfoDao {
     @Query("DELETE from DeterminationInfo")
     fun deleteData()
 
-    @Query("UPDATE DeterminationInfo SET last_check_time = :last_check_time WHERE id = :id")
-    fun update(id: Long, last_check_time: String)
+    @Query("UPDATE DeterminationInfo SET last_check_time = :currentTime WHERE id = :id")
+    fun update(id: Long, currentTime: Int)
 
     @Query("SELECT count(*) FROM DeterminationInfo")
     fun isEmpty(): Int

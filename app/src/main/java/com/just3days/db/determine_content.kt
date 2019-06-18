@@ -10,5 +10,5 @@ data class DeterminationInfo(
     var content: String?
 ) {
     @PrimaryKey(autoGenerate = true)
-    var id: Int? = null
+    var id: Long? = null
 }
