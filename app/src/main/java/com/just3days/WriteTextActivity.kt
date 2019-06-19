@@ -44,11 +44,9 @@ class WriteTextActivity : AppCompatActivity() {
                 last_check_time = currentTime
             )
 
-            val runSaveDataTask = Runnable {
+            DoAsync {
                 determinationDB?.determinationInfoDao()?.insert(newInfo)
-            }
-            val writeThread = Thread(runSaveDataTask)
-            writeThread.start()
+            }.execute()
 
             finish()
         }

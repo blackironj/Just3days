@@ -34,10 +34,6 @@ class ShowTextActivity : AppCompatActivity() {
             return info!![0]
         }
 
-        override fun onPreExecute() {
-            super.onPreExecute()
-        }
-
         override fun onPostExecute(result: DeterminationInfo?) {
             super.onPostExecute(result)
 
@@ -51,14 +47,12 @@ class ShowTextActivity : AppCompatActivity() {
 
             innerRenewbtn?.setOnClickListener {
                 val currentTime = (System.currentTimeMillis() / 1000).toInt()
-                val runRenewDataTask = Runnable {
+                innerTextView?.setTextColor(Color.argb(NON_TRANSPARENCY, 0, 0, 0))
+                DoAsync {
                     if (result != null) {
                         result.id?.let { id -> db?.determinationInfoDao()?.update(id, currentTime) }
                     }
-                    innerTextView?.setTextColor(Color.argb(NON_TRANSPARENCY, 0, 0, 0))
-                }
-                val renewThread = Thread(runRenewDataTask)
-                renewThread.start()
+                }.execute()
             }
         }
 

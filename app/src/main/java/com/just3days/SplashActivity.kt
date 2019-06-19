@@ -16,7 +16,7 @@ class SplashActivity : AppCompatActivity() {
     internal val runnable: Runnable = Runnable {
         determinationDB = DeterminationDB.getInstance(this)
 
-        val initTask = Runnable {
+        DoAsync {
             val item = determinationDB?.determinationInfoDao()?.isEmpty()
 
             if (!isFinishing) {
@@ -30,11 +30,7 @@ class SplashActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
-        }
-
-        val initThread = Thread(initTask)
-
-        initThread.start()
+        }.execute()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
