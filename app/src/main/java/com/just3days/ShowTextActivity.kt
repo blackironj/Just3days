@@ -42,7 +42,9 @@ class ShowTextActivity : AppCompatActivity() {
                 innerTextView?.setTextColor(Color.argb(alpha, 0, 0, 0))
                 innerTextView?.text = result.content
             } else {
-                db?.determinationInfoDao()?.deleteData()
+                DoAsync {
+                    db?.determinationInfoDao()?.deleteData()
+                }.execute()
             }
 
             innerRenewbtn?.setOnClickListener {
