@@ -1,5 +1,6 @@
 package com.just3days
 
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
@@ -26,7 +27,9 @@ class ShowTextActivity : AppCompatActivity() {
         AsyncTask<Unit, Unit, DeterminationInfo?>() {
         private val db: DeterminationDB? = db
 
+        @SuppressLint("StaticFieldLeak")
         val innerRenewbtn: Button? = renewbtn
+        @SuppressLint("StaticFieldLeak")
         val innerTextView: TextView? = textView
 
         override fun doInBackground(vararg params: Unit?): DeterminationInfo? {

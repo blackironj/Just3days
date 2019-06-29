@@ -28,7 +28,7 @@ class WriteTextActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(editable: Editable?) {
-                if (writeText.lineCount >= 10) {
+                if (writeText.length() >= 15) {
                     writeText.setText(prevText)
                     writeText.setSelection(writeText.length())
                 }

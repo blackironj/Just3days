@@ -13,19 +13,17 @@ class SplashActivity : AppCompatActivity() {
 
     private var delayHandler: Handler? = null
 
-    internal val runnable: Runnable = Runnable {
+    private val runnable: Runnable = Runnable {
         determinationDB = DeterminationDB.getInstance(this)
 
         DoAsync {
             val item = determinationDB?.determinationInfoDao()?.isEmpty()
 
             if (!isFinishing) {
-                val intent: Intent
-
-                if (item == 0)
-                    intent = Intent(applicationContext, WriteTextActivity::class.java)
+                val intent: Intent = if (item == 0)
+                    Intent(applicationContext, WriteTextActivity::class.java)
                 else
-                    intent = Intent(applicationContext, ShowTextActivity::class.java)
+                    Intent(applicationContext, ShowTextActivity::class.java)
 
                 startActivity(intent)
                 finish()
