@@ -1,76 +1,58 @@
 package com.just3days
 
-import android.annotation.SuppressLint
 import android.graphics.Color
-import android.os.AsyncTask
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
+import android.view.View
+import com.just3days.BaseApp.Companion.prefHelper
 import com.just3days.config.NON_TRANSPARENCY
 import com.just3days.config.THREE_DAYS
-import com.just3days.db.DeterminationDB
-import com.just3days.db.DeterminationInfo
-import kotlinx.android.synthetic.main.activity_show.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 class ShowTextActivity : AppCompatActivity() {
-    private val determinationDB: DeterminationDB? = DeterminationDB.getInstance(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_show)
+        setContentView(R.layout.activity_main)
 
-        GetDataAsyncTask(showText, btnRenewData, determinationDB!!).execute()
+        firstRunInfo.visibility = View.GONE
+        dtText.isEnabled = false
+
+        val currentTime = (System.currentTimeMillis() / 1000).toInt()
+        val alpha = calculateAlpha(currentTime, prefHelper.lastCheckTime)
+
+        if (alpha == null) {
+            //TODO : it should be handled depending on success
+
+            prefHelper.startTime = 0
+            prefHelper.lastCheckTime = 0
+            prefHelper.determinationContents = null
+
+        } else {
+            setTextTransparency(alpha)
+
+            if (prefHelper.determinationContents != null)
+                dtText.setText(prefHelper.determinationContents)
+        }
+
+        heartText.setOnClickListener {
+            prefHelper.lastCheckTime = (System.currentTimeMillis() / 1000).toInt()
+            setTextTransparency(NON_TRANSPARENCY)
+        }
     }
 
-    class GetDataAsyncTask(textView: TextView, renewbtn: Button, db: DeterminationDB) :
-        AsyncTask<Unit, Unit, DeterminationInfo?>() {
-        private val db: DeterminationDB? = db
+    private fun setTextTransparency(alpha: Int){
+        heartText.setTextColor(Color.argb(alpha, 0, 0, 0))
+        dtText.setTextColor(Color.argb(alpha, 0, 0, 0))
+    }
 
-        @SuppressLint("StaticFieldLeak")
-        val innerRenewbtn: Button? = renewbtn
-        @SuppressLint("StaticFieldLeak")
-        val innerTextView: TextView? = textView
+    private fun calculateAlpha(currentTime: Int, lastCheckTime: Int): Int? {
+        val difference = currentTime - lastCheckTime
+        if (difference >= THREE_DAYS)
+            return null
 
-        override fun doInBackground(vararg params: Unit?): DeterminationInfo? {
-            val info = db?.determinationInfoDao()?.getData()
-            return info!![0]
-        }
+        val ratio = difference.toFloat() / THREE_DAYS.toFloat()
 
-        override fun onPostExecute(result: DeterminationInfo?) {
-            super.onPostExecute(result)
-
-            val alpha = result?.last_check_time?.let { calculateAlpha(it) }
-            if (alpha != null) {
-                innerTextView?.setTextColor(Color.argb(alpha, 0, 0, 0))
-                innerTextView?.text = result.content
-            } else {
-                DoAsync {
-                    db?.determinationInfoDao()?.deleteData()
-                }.execute()
-            }
-
-            innerRenewbtn?.setOnClickListener {
-                val currentTime = (System.currentTimeMillis() / 1000).toInt()
-                innerTextView?.setTextColor(Color.argb(NON_TRANSPARENCY, 0, 0, 0))
-                DoAsync {
-                    if (result != null) {
-                        result.id?.let { id -> db?.determinationInfoDao()?.update(id, currentTime) }
-                    }
-                }.execute()
-            }
-        }
-
-        private fun calculateAlpha(lastCheckTime: Int): Int? {
-            val currentTime = (System.currentTimeMillis() / 1000).toInt()
-
-            val difference = currentTime - lastCheckTime
-            if (difference >= THREE_DAYS)
-                return null
-
-            val ratio = difference.toFloat() / THREE_DAYS.toFloat()
-
-            return NON_TRANSPARENCY - (NON_TRANSPARENCY * ratio).toInt()
-        }
+        return NON_TRANSPARENCY - (NON_TRANSPARENCY * ratio).toInt()
     }
 }

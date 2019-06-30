@@ -1,55 +1,33 @@
 package com.just3days
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import com.just3days.db.DeterminationDB
-import com.just3days.db.DeterminationInfo
-import kotlinx.android.synthetic.main.activity_write.*
+import android.view.View
+import com.just3days.BaseApp.Companion.prefHelper
+import kotlinx.android.synthetic.main.activity_main.*
 
 class WriteTextActivity : AppCompatActivity() {
 
-    private var determinationDB: DeterminationDB? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_write)
+        setContentView(R.layout.activity_main)
 
-        determinationDB = DeterminationDB.getInstance(this)
+        firstRunInfo.visibility = View.GONE
 
-        var prevText = ""
-        writeText.addTextChangedListener(object : TextWatcher {
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                prevText = s.toString()
-            }
-
-            override fun afterTextChanged(editable: Editable?) {
-                if (writeText.length() >= 15) {
-                    writeText.setText(prevText)
-                    writeText.setSelection(writeText.length())
-                }
-            }
-        })
-
-        btnSaveData.setOnClickListener {
+        heartText.setOnClickListener {
             val currentTime = (System.currentTimeMillis() / 1000).toInt()
 
-            val newInfo = DeterminationInfo(
-                content = writeText.text.toString(),
-                start_time = currentTime,
-                last_check_time = currentTime
-            )
+            prefHelper.startTime = currentTime
+            prefHelper.lastCheckTime = currentTime
+            prefHelper.determinationContents = dtText.text.toString()
 
-            DoAsync {
-                determinationDB?.determinationInfoDao()?.insert(newInfo)
-            }.execute()
+            val intent = Intent(applicationContext, ShowTextActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_NO_ANIMATION
+            startActivity(intent)
+            overridePendingTransition(0, 0)
 
             finish()
         }
-
     }
 }
