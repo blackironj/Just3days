@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.just3days.BaseApp.Companion.prefHelper
+import com.just3days.config.AppConstants
+import com.just3days.data.AppPreferenceHeler
 import kotlinx.android.synthetic.main.activity_main.*
 
 class StartActivity : AppCompatActivity() {
@@ -17,6 +19,8 @@ class StartActivity : AppCompatActivity() {
         if (prefHelper.firstRun) {
             setContentView(R.layout.activity_main)
             prefHelper.firstRun = false
+
+            firstRunInfo.text = AppConstants.INFO
 
             firstRunInfo.setOnClickListener {
                 moveToNextActivity()
