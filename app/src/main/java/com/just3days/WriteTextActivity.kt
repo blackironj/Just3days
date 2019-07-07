@@ -15,19 +15,22 @@ class WriteTextActivity : AppCompatActivity() {
 
         firstRunInfo.visibility = View.GONE
 
-        heartText.setOnClickListener {
-            val currentTime = (System.currentTimeMillis() / 1000).toInt()
+        heartBtn.setOnClickListener {
+            val currText = dtText.text.trim()
+            if (currText.isNotEmpty()) {
+                val currentTime = (System.currentTimeMillis() / 1000).toInt()
 
-            prefHelper.startTime = currentTime
-            prefHelper.lastCheckTime = currentTime
-            prefHelper.determinationContents = dtText.text.toString()
+                prefHelper.startTime = currentTime
+                prefHelper.lastCheckTime = currentTime
+                prefHelper.determinationContents = dtText.text.toString()
 
-            val intent = Intent(applicationContext, ShowTextActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_NO_ANIMATION
-            startActivity(intent)
-            overridePendingTransition(0, 0)
+                val intent = Intent(applicationContext, ShowTextActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_NO_ANIMATION
+                startActivity(intent)
+                overridePendingTransition(0, 0)
 
-            finish()
+                finish()
+            }
         }
     }
 }

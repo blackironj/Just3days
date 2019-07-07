@@ -40,14 +40,13 @@ class ShowTextActivity : AppCompatActivity() {
                 dtText.setText(prefHelper.determinationContents)
         }
 
-        heartText.setOnClickListener {
+        heartBtn.setOnClickListener {
             prefHelper.lastCheckTime = (System.currentTimeMillis() / 1000).toInt()
             setTextTransparency(NON_TRANSPARENCY)
         }
     }
 
-    private fun setTextTransparency(alpha: Int){
-        heartText.setTextColor(Color.argb(alpha, 0, 0, 0))
+    private fun setTextTransparency(alpha: Int) {
         dtText.setTextColor(Color.argb(alpha, 0, 0, 0))
     }
 
