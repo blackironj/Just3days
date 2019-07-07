@@ -10,7 +10,7 @@ interface PreferenceHelper {
 }
 
 class AppPreferenceHeler constructor(
-    val context: Context,
+    context: Context,
     prefFileName: String
 ) : PreferenceHelper {
     private val PREF_KEY_CONTENTS: String = "PREF_KEY_CONTENTS"
@@ -29,7 +29,7 @@ class AppPreferenceHeler constructor(
         set(value) = prefs.edit().putInt(PREF_KEY_START_TIME, value).apply()
 
     override var lastCheckTime: Int
-        get() = prefs.getInt(PREF_KEY_START_TIME, 0)
+        get() = prefs.getInt(PREF_KEY_RENEW_TIME, 0)
         set(value) = prefs.edit().putInt(PREF_KEY_RENEW_TIME, value).apply()
 
     override var firstRun: Boolean

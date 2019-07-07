@@ -1,5 +1,6 @@
 package com.just3days
 
+import android.content.Intent
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -22,12 +23,16 @@ class ShowTextActivity : AppCompatActivity() {
         val alpha = calculateAlpha(currentTime, prefHelper.lastCheckTime)
 
         if (alpha == null) {
-            //TODO : it should be handled depending on success
-
             prefHelper.startTime = 0
             prefHelper.lastCheckTime = 0
             prefHelper.determinationContents = null
 
+            val intent = Intent(applicationContext, WriteTextActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_NO_ANIMATION
+            startActivity(intent)
+            overridePendingTransition(0, 0)
+
+            finish()
         } else {
             setTextTransparency(alpha)
 
