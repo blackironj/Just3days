@@ -1,6 +1,7 @@
 package com.just3days.config
 
-const val THREE_DAYS: Int = 259200 // Time (seconds)
+const val THREE_DAYS: Int = 60 // Test time
+//const val THREE_DAYS: Int = 259200 // Time (seconds)
 const val NON_TRANSPARENCY: Int = 255
 
 object AppConstants {

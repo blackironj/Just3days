@@ -14,7 +14,6 @@ class StartActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         if (prefHelper.firstRun) {
-            setContentView(R.layout.activity_main)
             prefHelper.firstRun = false
 
             firstRunInfo.text = AppConstants.INFO
@@ -39,8 +38,7 @@ class StartActivity : AppCompatActivity() {
                 prefHelper.lastCheckTime = 0
                 prefHelper.startTime = 0
                 Intent(applicationContext, WriteTextActivity::class.java)
-            }
-            else
+            } else
                 Intent(applicationContext, ShowTextActivity::class.java)
         }
         intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY or Intent.FLAG_ACTIVITY_NO_ANIMATION
