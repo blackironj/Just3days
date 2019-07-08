@@ -3,6 +3,8 @@ package com.just3days
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import com.just3days.BaseApp.Companion.prefHelper
 import kotlinx.android.synthetic.main.activity_main.*
@@ -14,6 +16,18 @@ class WriteTextActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         firstRunInfo.visibility = View.GONE
+
+        dtText.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(p0: Editable?)  = Unit
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int)  = Unit
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val s = p0.toString()
+                if (s.length > 20) {
+                    dtText.setText(s.subSequence(0, 20))
+                    dtText.setSelection(20)
+                }
+            }
+        })
 
         heartBtn.setOnClickListener {
             val currText = dtText.text.trim()
