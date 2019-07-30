@@ -14,12 +14,13 @@
         <activity android:name=".StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
-
+                <action android:name="android.intent.action.VIEW"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name=".WriteTextActivity" />
+        <activity android:name=".WriteTextActivity"
+                  android:windowSoftInputMode="adjustResize"/>
 
         <activity android:name=".ShowTextActivity" />
 
