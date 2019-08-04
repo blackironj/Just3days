@@ -219,3 +219,6 @@ hs_err_pid*
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.gitignore.io/api/jetbrains+all,androidstudio,visualstudiocode
+
+# App release file ( apk / aab )
+app/release/*
